@@ -46,7 +46,7 @@ function TransactionList({ transactions, onDelete }) {
             <tr key={t.id}>
               <td>{t.date}</td>
               <td>{t.description}</td>
-              <td className="category-badge"><span>{t.category}</span></td>
+              <td>{t.category}</td>
               <td className={t.type === "income" ? "income-amount" : "expense-amount"}>
                 {t.type === "income" ? "+" : "-"}${t.amount}
               </td>
