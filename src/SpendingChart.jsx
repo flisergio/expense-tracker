@@ -1,4 +1,6 @@
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+
+const COLORS = ['#818cf8', '#34d399', '#fbbf24', '#f87171', '#38bdf8', '#a78bfa'];
 
 function SpendingChart({ transactions }) {
   const expensesByCategory = transactions
@@ -20,7 +22,11 @@ function SpendingChart({ transactions }) {
           <XAxis dataKey="name" />
           <YAxis />
           <Tooltip formatter={(value) => `$${value}`} />
-          <Bar dataKey="value" fill="#8884d8" />
+          <Bar dataKey="value">
+            {data.map((_, index) => (
+              <Cell key={index} fill={COLORS[index % COLORS.length]} />
+            ))}
+          </Bar>
         </BarChart>
       </ResponsiveContainer>
     </div>
