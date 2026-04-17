@@ -21,10 +21,17 @@ npm run preview   # Preview production build
 - **Stack:** React 19 + Vite + ESLint (JavaScript, not TypeScript)
 - **Entry:** `index.html` → `src/main.jsx` → `src/App.jsx`
 
-All logic lives in a single monolithic `src/App.jsx` component: state management, filtering, financial calculations, and UI. There is no routing, no backend, and no persistence — state resets on page reload.
+There is no routing, no backend, and no persistence — state resets on page reload.
+
+### Component Structure
+
+- **`App.jsx`** — root component; owns the `transactions` array in state and passes it down
+- **`Summary.jsx`** — receives `transactions`, computes `totalIncome`, `totalExpenses`, and `balance` internally
+- **`TransactionForm.jsx`** — owns its own form state; calls `onAdd(transaction)` prop on submit
+- **`TransactionList.jsx`** — receives `transactions`; owns filter state (`filterType`, `filterCategory`) internally
+
+Transaction `amount` values are stored as numbers throughout (initial data and on add).
 
 ### Known Intentional Issues
 
-- `totalIncome` and `totalExpenses` calculations use `reduce` on `t.amount` without numeric conversion (amounts are stored as strings)
 - No delete transaction functionality despite `.delete-btn` CSS class existing in `App.css`
-- All state and logic in one component with no modularization
