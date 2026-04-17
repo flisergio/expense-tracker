@@ -1,30 +1,30 @@
 import { useState } from 'react';
-
-const categories = ["food", "housing", "utilities", "transport", "entertainment", "salary", "other"];
+import { CATEGORIES } from './constants';
 
 function TransactionForm({ onAdd }) {
-  const [description, setDescription] = useState("");
-  const [amount, setAmount] = useState("");
-  const [type, setType] = useState("expense");
-  const [category, setCategory] = useState("food");
+  const [description, setDescription] = useState('');
+  const [amount, setAmount] = useState('');
+  const [type, setType] = useState('expense');
+  const [category, setCategory] = useState('food');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!description || !amount) return;
+    const parsedAmount = Number(amount);
+    if (!description || !parsedAmount || parsedAmount <= 0 || isNaN(parsedAmount)) return;
 
     onAdd({
       id: Date.now(),
       description,
-      amount: Number(amount),
+      amount: parsedAmount,
       type,
       category,
       date: new Date().toISOString().split('T')[0],
     });
 
-    setDescription("");
-    setAmount("");
-    setType("expense");
-    setCategory("food");
+    setDescription('');
+    setAmount('');
+    setType('expense');
+    setCategory('food');
   };
 
   return (
@@ -44,12 +44,12 @@ function TransactionForm({ onAdd }) {
           onChange={(e) => setAmount(e.target.value)}
         />
         <select value={type} onChange={(e) => setType(e.target.value)}>
-          <option value="income">Income</option>
           <option value="expense">Expense</option>
+          <option value="income">Income</option>
         </select>
         <select value={category} onChange={(e) => setCategory(e.target.value)}>
-          {categories.map(cat => (
-            <option key={cat} value={cat}>{cat}</option>
+          {CATEGORIES.map(cat => (
+            <option key={cat} value={cat}>{cat.charAt(0).toUpperCase() + cat.slice(1)}</option>
           ))}
         </select>
         <button type="submit">Add</button>

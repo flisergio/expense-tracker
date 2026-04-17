@@ -38,8 +38,8 @@ function SpendingChart({ transactions }) {
             cursor={{ fill: 'rgba(99,102,241,0.07)' }}
           />
           <Bar dataKey="value">
-            {data.map((_, index) => (
-              <Cell key={index} fill={COLORS[index % COLORS.length]} />
+            {data.map((entry, index) => (
+              <Cell key={entry.name} fill={COLORS[index % COLORS.length]} />
             ))}
           </Bar>
         </BarChart>
